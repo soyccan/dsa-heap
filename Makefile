@@ -48,13 +48,13 @@ loop: printer printer-s test/rand
 	while true; do \
 		printf .; \
 		test/rand > test/in; \
-		./printer < test/in > test/out || break; \
-		./printer-s < test/in > test/outs || break; \
-		diff test/out test/outs || break; \
+		./printer < test/in > test/tmp || break; \
+		./printer-s < test/in > test/out || break; \
+		diff test/out test/tmp || break; \
 	done
 
 run: printer
-	/usr/bin/time -v ./printer < 1.in | diff - 1.out
+	/usr/bin/time -v ./printer < test/samp.in | diff - test/samp.out
 
 valgrind: printer
 	valgrind --leak-check=full --show-leak-kinds=all --quiet \

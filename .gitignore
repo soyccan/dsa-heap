@@ -15,6 +15,6 @@ f_mode
 
 test/in
 test/out
-test/outs
+test/tmp
 
 tmp/

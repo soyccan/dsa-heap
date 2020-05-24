@@ -78,13 +78,13 @@ no jobs in 6
 -345 added to printer 3 with priority 140
 333 added to printer 1 with priority 123
 no jobs in 4
--148 printed on printer 3
+-345 printed on printer 3
 -169 added to printer 4 with priority -470
 144 added to printer 8 with priority -9
 quota 416 set for 5
 333 dropped on printer 1
 360 added to printer 0 with priority -269
--345 printed on printer 3
+-148 printed on printer 3
 no jobs in 7
 no jobs in 7
 360 printed on printer 0
@@ -124,7 +124,7 @@ quota 109 set for 0
 quota 700 set for 6
 quota 181 set for 4
 no jobs in 3
-107 printed on printer 9
+-305 printed on printer 9
 273 dropped on printer 8
 quota 867 set for 0
 no jobs in 6
@@ -143,7 +143,7 @@ no jobs in 2
 quota 988 set for 1
 quota 436 set for 8
 quota 839 set for 5
--147 printed on printer 9
+-383 printed on printer 9
 334 added to printer 9 with priority 51
 246 dropped on printer 0
 91 printed on printer 1
@@ -192,7 +192,7 @@ no jobs in 2
 quota 355 set for 9
 no jobs in 0
 quota 259 set for 0
--305 printed on printer 9
+334 printed on printer 9
 396 added to printer 0 with priority 249
 quota 319 set for 4
 quota 570 set for 4
