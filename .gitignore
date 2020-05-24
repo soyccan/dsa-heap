@@ -1,0 +1,12 @@
+*.d
+*.json
+*.o
+
+printer
+
+*.dSYM
+.DS_Store
+.lldbinit
+.clangd
+
+tmp/

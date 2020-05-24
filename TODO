@@ -1,0 +1,62 @@
+
+ifdef TEST1
+    Heap = std:priority_queue
+        push: logN
+        pop_max: logN
+        empty: 1
+        size: 1
+
+elif def TEST2
+    Heap = std::set
+        push: logN
+        pop_max: logN
+        pop_min: logN
+        empty: 1
+        size: 1
+
+else
+    Heap
+        push(key, value)
+
+        pop_max()
+
+        pop_min()
+
+        empty()
+
+        size()
+
+
+Printer
+    id
+    quota
+    Heap job_queue
+
+    add(job_id, priority)
+        if job_queue.size() == quota
+            drop()
+        job_queue.push(priority, id)
+        print job_id added to printer printer_id with priority priority
+
+
+    quota(q)
+        while job_queue.size() > q
+            drop()
+        quota = q
+        print quota set for id
+
+    drop()
+        if job_queue not empty
+            job_queue.pop_min()
+            print job_id dropped on printer id
+        else
+            print no jobs in id
+
+    print()
+        if job_queue not empty
+            print job_queue.pop_max()
+        else
+            print no jobs in id
+
+
+Printer printers[]

@@ -1,0 +1,11 @@
+7 10
+add 12 65 2
+drop 3
+add -18 21 1
+add 90 68 5
+add 17 47 5
+quota 1 2
+print 5
+add 14 -5 2
+quota 12 3
+drop 1
