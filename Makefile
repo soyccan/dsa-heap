@@ -2,8 +2,8 @@ CXX := clang++
 CXXFLAGS := -Wall -Wextra -std=gnu++17 -I/usr/local/include
 LDFLAGS :=
 
-EXES := printer printer-s test/rand htest
-OBJS := main.o minmaxheap.o main-s.o minmaxheap-s.o htest.o
+EXES := printer printer-s test/rand
+OBJS := main.o minmaxheap.o main-s.o minmaxheap-s.o
 deps := $(OBJS:%.o=.%.o.d)
 compdb-dep := $(OBJS:%.o=.%.o.json) # compilation database
 compdb := compile_commands.json
@@ -31,9 +31,6 @@ printer: main.o minmaxheap.o
 
 printer-s: main-s.o minmaxheap-s.o
 	# stable version
-	$(CXX) $(LDFLAGS) -o $@ $^
-
-htest: htest.o minmaxheap.o
 	$(CXX) $(LDFLAGS) -o $@ $^
 
 main-s.o: main.cpp
