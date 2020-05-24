@@ -1,0 +1,101 @@
+100 100
+add 23 17 14 
+add 85 50 73 
+quota 90 1 
+add 86 36 68 
+quota 31 0 
+quota 16 32 
+add 30 62 56 
+add 93 5 32 
+print 70 
+quota 26 39 
+print 98 
+add 98 72 98 
+add 25 38 79 
+quota 58 36 
+add 59 57 60 
+print 73 
+drop 5 
+drop 46 
+drop 87 
+drop 5 
+quota 63 31 
+quota 63 82 
+quota 61 6 
+print 53 
+print 66 
+add 44 24 68 
+add 35 77 52 
+print 51 
+drop 36 
+quota 92 87 
+add 22 92 81 
+drop 76 
+drop 1 
+drop 8 
+drop 16 
+print 67 
+print 1 
+add 95 26 20 
+print 13 
+drop 39 
+add 1 85 29 
+drop 77 
+add 58 51 60 
+print 89 
+add 74 42 50 
+drop 56 
+drop 69 
+add 17 23 76 
+add 1 48 51 
+drop 98 
+drop 7 
+print 75 
+add 37 4 4 
+print 56 
+add 39 97 57 
+quota 92 7 
+print 48 
+drop 68 
+add 95 43 52 
+add 44 53 63 
+print 51 
+drop 66 
+print 29 
+drop 40 
+drop 58 
+add 94 26 79 
+print 83 
+add 35 43 43 
+add 21 63 60 
+add 7 65 28 
+print 18 
+add 10 69 98 
+add 24 79 82 
+quota 65 92 
+quota 59 71 
+add 3 6 80 
+drop 49 
+print 74 
+drop 90 
+print 91 
+quota 52 19 
+quota 70 63 
+print 91 
+quota 44 16 
+quota 26 33 
+drop 71 
+drop 70 
+drop 78 
+quota 0 10 
+print 50 
+quota 90 24 
+print 77 
+print 77 
+quota 87 78 
+print 2 
+quota 42 16 
+quota 58 9 
+add 43 19 39 
+quota 41 33 
+print 66 

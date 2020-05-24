@@ -3,10 +3,16 @@
 *.o
 
 printer
+printer-s
+test/rand
 
 *.dSYM
 .DS_Store
 .lldbinit
 .clangd
+
+test/in
+test/out
+test/outs
 
 tmp/

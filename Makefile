@@ -2,8 +2,8 @@ CXX := clang++
 CXXFLAGS := -Wall -Wextra -std=gnu++17 -I/usr/local/include
 LDFLAGS :=
 
-EXES := printer
-OBJS := main.o minmaxheap.o
+EXES := printer printer-s test/rand htest
+OBJS := main.o minmaxheap.o main-s.o minmaxheap-s.o htest.o
 deps := $(OBJS:%.o=.%.o.d)
 compdb-dep := $(OBJS:%.o=.%.o.json) # compilation database
 compdb := compile_commands.json
@@ -13,7 +13,7 @@ ifndef DEBUG
 	DEBUG := 1
 endif
 ifeq ($(DEBUG), 1)
-	CXXFLAGS += -g -D_TEST
+	CXXFLAGS += -g
 else
 	CXXFLAGS += -DNDEBUG -O2
 endif
@@ -26,14 +26,40 @@ all: $(EXES) $(compdb)
 $(compdb): $(compdb-dep)
 	sed -e '1s/^/[/' -e '$$s/,$$/]/' $^ > $@
 
-printer: $(OBJS)
+printer: main.o minmaxheap.o
 	$(CXX) $(LDFLAGS) -o $@ $^
 
-$(OBJS): %.o: %.cpp
+printer-s: main-s.o minmaxheap-s.o
+	# stable version
+	$(CXX) $(LDFLAGS) -o $@ $^
+
+htest: htest.o minmaxheap.o
+	$(CXX) $(LDFLAGS) -o $@ $^
+
+main-s.o: main.cpp
+	$(CXX) $(CXXFLAGS) -D_STABLE -c -o $@ -MMD -MF .$@.d -MJ .$@.json $<
+
+minmaxheap-s.o: minmaxheap-s.cpp
+	$(CXX) $(CXXFLAGS) -D_STABLE -c -o $@ -MMD -MF .$@.d -MJ .$@.json $<
+
+%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ -MMD -MF .$@.d -MJ .$@.json $<
 
+test/rand: test/rand.c
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o test/rand $^
+
+
+loop: printer printer-s test/rand
+	while true; do \
+		printf .; \
+		test/rand > test/in; \
+		./printer < test/in > test/out || break; \
+		./printer-s < test/in > test/outs || break; \
+		diff test/out test/outs || break; \
+	done
+
 run: printer
-	./printer < 1.in
+	./printer < 1.in | diff - 1.out
 
 scan-build:
 	PATH=/usr/local/opt/llvm/bin:$(PATH) scan-build make

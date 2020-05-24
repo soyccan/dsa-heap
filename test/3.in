@@ -1,0 +1,11 @@
+100 10
+quota 13 85 
+add 96 41 29 
+drop 88 
+print 62 
+drop 29 
+drop 58 
+quota 57 30 
+drop 68 
+drop 80 
+print 16 

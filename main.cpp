@@ -82,7 +82,7 @@ int main()
     init(N);
     FOR (int, cmdi, 0, M) {
         fgets(line, sizeof line, stdin);
-        LOGN("  read: %s", line);
+        // LOGN("  read: %s", line);
         char* pline = line;
         char* pcmd = strsep(&pline, " ");
         memcpy(cmd, pcmd, sizeof cmd);  // TODO: vs. strncpy
@@ -106,6 +106,8 @@ int main()
         } else {
             INVAL(("unrecognized command: " + std::string(cmd)).c_str());
         }
+
+        // jobs[printer_id].dump_container();
     }
     return 0;
 }
