@@ -10,6 +10,8 @@ test/rand
 .DS_Store
 .lldbinit
 .clangd
+perf.data
+f_mode
 
 test/in
 test/out

@@ -1,6 +1,7 @@
 #include "minmaxheap.h"
 
 #include <algorithm>
+#include <cassert>
 #include <functional>
 #include <limits>
 #include <utility>
@@ -23,7 +24,7 @@ int MinMaxHeap::pop_max()
 {
     assert(!empty());
     assert(__heap.size() >= 1);
-    int i;
+    size_t i;
     if (__heap.size() <= 2)
         i = 1;
     else if (__heap.size() <= 3)
@@ -68,7 +69,7 @@ size_t MinMaxHeap::size() const
     return __heap.size() - 1;
 }
 
-inline bool MinMaxHeap::__has_child(int i) const
+inline bool MinMaxHeap::__has_child(size_t i) const
 {
     assert(__heap.size() >= 1);
     assert(i >= 1 && i < __heap.size());
@@ -78,13 +79,13 @@ inline bool MinMaxHeap::__has_child(int i) const
 }
 
 template <typename Compare>
-inline void MinMaxHeap::__push_down_base(int i, Compare comp)
+inline void MinMaxHeap::__push_down_base(size_t i, Compare comp)
 {
     while (__has_child(i)) {
-        int m = i;
+        size_t m = i;
         int flag = 0;  // child=1, grandchild=2
         // TODO: overflow
-        for (int j = i << 1; j < __heap.size() && j <= (i << 1) + 1; j++) {
+        for (size_t j = i << 1; j < __heap.size() && j <= (i << 1) + 1; j++) {
             // child of i
             if (comp(__heap[j], __heap[m])) {
                 // TODO: save __heap[m] in a local variable for performance?
@@ -92,7 +93,7 @@ inline void MinMaxHeap::__push_down_base(int i, Compare comp)
                 flag = 1;
             }
         }
-        for (int j = i << 2; j < __heap.size() && j <= (i << 2) + 3; j++) {
+        for (size_t j = i << 2; j < __heap.size() && j <= (i << 2) + 3; j++) {
             // grandchlid of i
             if (comp(__heap[j], __heap[m])) {
                 m = j;
@@ -120,17 +121,17 @@ inline void MinMaxHeap::__push_down_base(int i, Compare comp)
     }
 }
 
-inline void MinMaxHeap::__push_down_min(int i)
+inline void MinMaxHeap::__push_down_min(size_t i)
 {
     __push_down_base(i, std::less());
 }
 
-inline void MinMaxHeap::__push_down_max(int i)
+inline void MinMaxHeap::__push_down_max(size_t i)
 {
     __push_down_base(i, std::greater());
 }
 
-inline bool MinMaxHeap::__is_root(int i) const
+inline bool MinMaxHeap::__is_root(size_t i) const
 {
     assert(__heap.size() >= 1);
     assert(i >= 1 && i < __heap.size());
@@ -138,7 +139,7 @@ inline bool MinMaxHeap::__is_root(int i) const
     return i == 1;
 }
 
-inline void MinMaxHeap::__push_up(int i)
+inline void MinMaxHeap::__push_up(size_t i)
 {
     if (!__is_root(i)) {
         if (__builtin_clz(i) & 1) {
@@ -161,7 +162,7 @@ inline void MinMaxHeap::__push_up(int i)
     }
 }
 
-inline bool MinMaxHeap::__has_grandparent(int i) const
+inline bool MinMaxHeap::__has_grandparent(size_t i) const
 {
     assert(i >= 1 && i < __heap.size());
     assert(__heap.size() >= 1);
@@ -170,7 +171,7 @@ inline bool MinMaxHeap::__has_grandparent(int i) const
 }
 
 template <typename Compare>
-inline void MinMaxHeap::__push_up_base(int i, Compare comp)
+inline void MinMaxHeap::__push_up_base(size_t i, Compare comp)
 {
     while (__has_grandparent(i) && comp(__heap[i], __heap[i >> 2])) {
         std::swap(__heap[i], __heap[i >> 2]);
@@ -178,12 +179,12 @@ inline void MinMaxHeap::__push_up_base(int i, Compare comp)
     }
 }
 
-inline void MinMaxHeap::__push_up_min(int i)
+inline void MinMaxHeap::__push_up_min(size_t i)
 {
     __push_up_base(i, std::less());
 }
 
-inline void MinMaxHeap::__push_up_max(int i)
+inline void MinMaxHeap::__push_up_max(size_t i)
 {
     __push_up_base(i, std::greater());
 }

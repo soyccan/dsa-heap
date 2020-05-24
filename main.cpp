@@ -1,3 +1,4 @@
+#include <cassert>
 #include <cstdio>
 #include <cstring>
 #include <stdexcept>
@@ -22,7 +23,7 @@
 
 static int N, M;
 static std::vector<MinMaxHeap> jobs;
-static std::vector<int> quotas;
+static std::vector<unsigned int> quotas;
 
 
 void drop(int printer_id)
@@ -45,7 +46,7 @@ void add(int job_id, int pri, int printer_id)
            pri);
 }
 
-void quota(int q, int printer_id)
+void quota(unsigned int q, int printer_id)
 {
     while (jobs[printer_id].size() > q)
         drop(printer_id);

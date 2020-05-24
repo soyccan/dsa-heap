@@ -9,18 +9,16 @@ compdb-dep := $(OBJS:%.o=.%.o.json) # compilation database
 compdb := compile_commands.json
 
 
-ifndef DEBUG
-	DEBUG := 1
-endif
-ifeq ($(DEBUG), 1)
-	CXXFLAGS += -g
-else
-	CXXFLAGS += -DNDEBUG -O2
-endif
+.PHONY: all debug release loop clean run upload scan-build valgrind
 
+# set debug to release before handing in
+all: debug
 
-.PHONY: all clean run upload scan-build
-all: $(EXES) $(compdb)
+debug: CXXFLAGS += -g
+debug: printer printer-s test/rand $(compdb)
+
+release: CXXFLAGS += -DNDEBUG -O2
+release: printer
 
 
 $(compdb): $(compdb-dep)
@@ -43,7 +41,7 @@ minmaxheap-s.o: minmaxheap-s.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ -MMD -MF .$@.d -MJ .$@.json $<
 
 test/rand: test/rand.c
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o test/rand $^
+	gcc -o $@ $^
 
 
 loop: printer printer-s test/rand
@@ -56,10 +54,14 @@ loop: printer printer-s test/rand
 	done
 
 run: printer
-	./printer < 1.in | diff - 1.out
+	/usr/bin/time -v ./printer < 1.in | diff - 1.out
+
+valgrind: printer
+	valgrind --leak-check=full --show-leak-kinds=all --quiet \
+		./printer < test/5.in > /dev/null
 
 scan-build:
-	PATH=/usr/local/opt/llvm/bin:$(PATH) scan-build make
+	@PATH=/usr/local/opt/llvm/bin:$(PATH) scan-build make
 
 upload:
 	scp -P 9453 -r *.hpp *.h *.cpp Makefile \

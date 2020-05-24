@@ -25,21 +25,21 @@ private:
 
 #else
     template <typename Compare>
-    void __push_down_base(int i, Compare comp);
+    void __push_down_base(size_t i, Compare comp);
 
-    void __push_down_min(int i);
-    void __push_down_max(int i);
+    void __push_down_min(size_t i);
+    void __push_down_max(size_t i);
 
     template <typename Compare>
-    void __push_up_base(int i, Compare comp);
+    void __push_up_base(size_t i, Compare comp);
 
-    void __push_up_min(int i);
-    void __push_up_max(int i);
-    void __push_up(int i);
+    void __push_up_min(size_t i);
+    void __push_up_max(size_t i);
+    void __push_up(size_t i);
 
-    bool __has_child(int i) const;
-    bool __is_root(int i) const;
-    bool __has_grandparent(int i) const;
+    bool __has_child(size_t i) const;
+    bool __is_root(size_t i) const;
+    bool __has_grandparent(size_t i) const;
 
     // TODO: pair is not a good container for comparing key
     std::vector<std::pair<int, int>> __heap;
