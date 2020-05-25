@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-static const char* cmds[] = {"add", "quota", "drop", "print"};
-static int pmf[] = {1000, 0, 0, 0};
+static int pmf[] = {8000, 0, 1000, 1000};
 static int cmf[4];
-static int nargs[] = {3, 2, 1, 1};
+// static const char* cmds[] = {"add", "quota", "drop", "print"};
+// static int nargs[] = {3, 2, 1, 1};
 
 int main()
 {
@@ -15,14 +15,14 @@ int main()
     for (int i = 1; i < 4; i++)
         cmf[i] = cmf[i - 1] + pmf[i];
 
-    int N = 1000000, M = 1000000;
+    int N = 1, M = 1000000;
     printf("%d %d\n", N, M);
     while (M--) {
         int c = random() % cmf[3];
         int j = random() % 1000000 - 500000;
         int p = j;
         int id = random() % N;
-        int q = random() % 1000000 + 1;
+        int q = random() % 10 + 1;
         if (c < cmf[0])
             printf("add %d %d %d", j, p, id);
         else if (c < cmf[1])

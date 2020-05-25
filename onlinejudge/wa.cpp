@@ -1,4 +1,52 @@
-#include "minmaxheap.h"
+#ifndef _DSA_MINMAXHEAP_H_
+#define _DSA_MINMAXHEAP_H_ 1
+
+#include <algorithm>
+#include <list>
+#include <utility>
+#include <vector>
+
+class MinMaxHeap
+{
+public:
+    MinMaxHeap();
+    void push(int key, int value);
+    int pop_max();
+    int pop_min();
+
+    bool empty() const;
+    size_t size() const;
+
+    void dump_container() const;
+
+private:
+#ifdef _STABLE
+    std::list<std::pair<int, int>> __list;
+
+#else
+    template <typename Compare>
+    void __push_down_base(size_t i, Compare comp);
+
+    void __push_down_min(size_t i);
+    void __push_down_max(size_t i);
+
+    template <typename Compare>
+    void __push_up_base(size_t i, Compare comp);
+
+    void __push_up_min(size_t i);
+    void __push_up_max(size_t i);
+    void __push_up(size_t i);
+
+    bool __has_child(size_t i) const;
+    bool __is_root(size_t i) const;
+    bool __has_grandparent(size_t i) const;
+
+    // TODO: pair is not a good container for comparing key
+    std::vector<std::pair<int, int>> __heap;
+#endif  // _STABLE
+};
+
+#endif
 
 #include <algorithm>
 #include <cassert>
@@ -6,7 +54,26 @@
 #include <limits>
 #include <utility>
 
-#include "tools.h"
+/* convinient functions */
+#ifndef _DSA_TOOLS_H_
+#define _DSA_TOOLS_H_ 1
+
+#include <cstdio>
+
+/* debug only */
+#ifndef NDEBUG
+#define LOG(fmt, ...) fprintf(stderr, fmt "\n", ##__VA_ARGS__);
+#define LOGN(fmt, ...) fprintf(stderr, fmt, ##__VA_ARGS__);
+#else
+#define LOG(...)
+#define LOGN(...)
+#endif
+/* end debug only */
+
+
+#define FOR(type, i, start, end) for (type i = (start); i < (end); i++)
+
+#endif
 
 
 MinMaxHeap::MinMaxHeap()
@@ -124,12 +191,12 @@ inline void MinMaxHeap::__push_down_base(size_t i, Compare comp)
 
 inline void MinMaxHeap::__push_down_min(size_t i)
 {
-    __push_down_base(i, std::less());
+    __push_down_base(i, std::less<std::pair<int, int>>());
 }
 
 inline void MinMaxHeap::__push_down_max(size_t i)
 {
-    __push_down_base(i, std::greater());
+    __push_down_base(i, std::greater<std::pair<int, int>>());
 }
 
 inline bool MinMaxHeap::__is_root(size_t i) const
@@ -182,12 +249,12 @@ inline void MinMaxHeap::__push_up_base(size_t i, Compare comp)
 
 inline void MinMaxHeap::__push_up_min(size_t i)
 {
-    __push_up_base(i, std::less());
+    __push_up_base(i, std::less<std::pair<int, int>>());
 }
 
 inline void MinMaxHeap::__push_up_max(size_t i)
 {
-    __push_up_base(i, std::greater());
+    __push_up_base(i, std::greater<std::pair<int, int>>());
 }
 
 void MinMaxHeap::dump_container() const
@@ -197,4 +264,42 @@ void MinMaxHeap::dump_container() const
         LOGN("(%d,%d) ", p.first, p.second);
     }
     LOG("");
+}
+
+#include <cassert>
+#include <cstdio>
+#include <cstring>
+#include <stdexcept>
+#include <string>
+#include <vector>
+
+#define EQ(s1, s2) (strncmp(s1, s2, sizeof(s1)) == 0)
+#define INVAL(msg)                                                        \
+    {                                                                     \
+        fprintf(stderr, "\e[31mERROR\e[0m: invalid argument: %s\n", msg); \
+        exit(255);                                                        \
+    }
+#define PARSE_ARGS(identifier, num, str, fmt, ...)            \
+    {                                                         \
+        if (sscanf(str, fmt, ##__VA_ARGS__) != (num))         \
+            INVAL(identifier " requires " #num " arguments"); \
+    }
+
+int main()
+{
+    int a, b;
+    MinMaxHeap h;
+    while (scanf("%d", &a) != EOF) {
+        if (a == 1) {
+            scanf("%d", &b);
+            h.push(b, b);
+
+        } else if (a == 2) {
+            printf("%d\n", h.pop_max());
+
+        } else {
+            printf("%d\n", h.pop_min());
+        }
+    }
+    return 0;
 }

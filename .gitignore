@@ -4,7 +4,9 @@
 
 printer
 printer-s
-test/rand
+rand
+ac
+wa
 
 *.dSYM
 .DS_Store
@@ -13,8 +15,8 @@ test/rand
 perf.data
 f_mode
 
-test/in
-test/out
-test/tmp
+in
+out
+tmp
 
 tmp/
