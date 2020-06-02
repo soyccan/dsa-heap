@@ -12,7 +12,6 @@
 MinMaxHeap::MinMaxHeap()
 {
     __heap.resize(1);  // index 0 is unused
-    __heap.reserve(1000000);
 }
 
 void MinMaxHeap::push(int key, int value)

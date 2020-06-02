@@ -1,4 +1,4 @@
-CXX := clang++
+CXX := /usr/bin/clang++
 CXXFLAGS := -Wall -Wextra -std=gnu++17 -I/usr/local/include
 LDFLAGS :=
 
@@ -12,7 +12,7 @@ compdb := compile_commands.json
 .PHONY: all debug release loop clean run upload scan-build valgrind
 
 # set debug to release before handing in
-all: debug
+all: release
 
 debug: CXXFLAGS += -g
 debug: printer printer-s test/rand $(compdb)

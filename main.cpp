@@ -68,7 +68,7 @@ void init(int num_printers)
 {
     quotas.resize(num_printers);
     jobs.resize(num_printers);
-    FOR (int, i, 0, N) {
+    FOR (int, i, 0, num_printers) {
         quotas[i] = M;
     }
 }
